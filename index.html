@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart To-Do App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>📋 My To-Do List</h2>
+    <div class="progress-bar">
+      <div class="progress" id="progressBar"></div>
+    </div>
+
+    <div id="taskSections">
+      <div class="category-section" id="Work">
+        <h3>Work</h3>
+        <ul class="task-list"></ul>
+      </div>
+      <div class="category-section" id="Study">
+        <h3>Study</h3>
+        <ul class="task-list"></ul>
+      </div>
+      <div class="category-section" id="Personal">
+        <h3>Personal</h3>
+        <ul class="task-list"></ul>
+      </div>
+      <div class="category-section" id="Other">
+        <h3>Other</h3>
+        <ul class="task-list"></ul>
+      </div>
+    </div>
+
+    <div class="task-input">
+      <input type="text" id="taskName" placeholder="Task name" />
+      <input type="time" id="taskTime" />
+      <select id="taskPriority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <select id="taskCategory">
+        <option value="Work">Work</option>
+        <option value="Study">Study</option>
+        <option value="Personal">Personal</option>
+        <option value="Other">Other</option>
+      </select>
+      <select id="taskRepeat">
+        <option value="None">No Repeat</option>
+        <option value="Daily">Daily</option>
+        <option value="Weekly">Weekly</option>
+      </select>
+      <button onclick="addTask()">Add Task</button>
+      <button onclick="showPendingTasks()">Show Pending Tasks</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
