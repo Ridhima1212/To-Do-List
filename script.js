@@ -42,19 +42,25 @@ function renderTasks() {
     tasks.filter(task => task.category === cat).forEach(task => {
       const li = document.createElement('li');
       li.className = 'task-item';
-
       let overdue = false;
       if (task.time && !task.completed) {
-        const taskTime = new Date();
         const [hours, minutes] = task.time.split(':');
+
+        const taskTime = new Date();
         taskTime.setHours(parseInt(hours));
         taskTime.setMinutes(parseInt(minutes));
         taskTime.setSeconds(0);
+        taskTime.setMilliseconds(0);
+
+        const now = new Date();
+        now.setSeconds(0);
+        now.setMilliseconds(0);
 
         if (now > taskTime) {
           overdue = true;
         }
       }
+
 
       li.innerHTML = `
         <div class="task-header">
@@ -179,8 +185,3 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTasks();
   setInterval(checkOverdueTasks, 60000); // Check every minute
 });
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log('✅ Service Worker registered'))
-    .catch(err => console.error('❌ Service Worker registration failed:', err));
-}
