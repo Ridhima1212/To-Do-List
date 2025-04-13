@@ -8,8 +8,8 @@
   "description": "A smart and stylish to-do app with categories, notifications, and progress tracking.",
   "icons": [
     {
-      "src": "icon.png",
-      "sizes": "192x192",
+      "src": "To-Do-Logo.png",
+      "sizes": "100x100",
       "type": "image/png"
     },
     {
