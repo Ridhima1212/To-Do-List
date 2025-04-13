@@ -24,7 +24,7 @@ body {
     margin-bottom: 24px;
   }
   input, select, button {
-    padding: 8px;
+    padding: 10px;
     font-size: 1em;
     border-radius: 8px;
     border: 1px solid #ccc;
