@@ -1,0 +1,21 @@
+{
+  "name": "Smart To-Do App",
+  "short_name": "ToDo",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#26a69a",
+  "description": "A smart and stylish to-do app with categories, notifications, and progress tracking.",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "To-Do Logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
