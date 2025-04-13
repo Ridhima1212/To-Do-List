@@ -20,7 +20,8 @@ function addTask() {
     completed: false,
     priority,
     category,
-    repeat
+    repeat,
+    notified: false
   };
 
   tasks.push(task);
@@ -31,16 +32,29 @@ function addTask() {
 
 function renderTasks() {
   const categories = ['Work', 'Study', 'Personal', 'Other'];
+  const now = new Date();
+
   categories.forEach(cat => {
     const section = document.getElementById(cat);
     const ul = section.querySelector('.task-list');
-    ul.innerHTML = '';  // Clear existing tasks in that category
+    ul.innerHTML = '';
 
     tasks.filter(task => task.category === cat).forEach(task => {
       const li = document.createElement('li');
       li.className = 'task-item';
-      const now = new Date();
-      const overdue = task.time && new Date(`2025-04-12T${task.time}:00`) < now;
+
+      let overdue = false;
+      if (task.time && !task.completed) {
+        const taskTime = new Date();
+        const [hours, minutes] = task.time.split(':');
+        taskTime.setHours(parseInt(hours));
+        taskTime.setMinutes(parseInt(minutes));
+        taskTime.setSeconds(0);
+
+        if (now > taskTime) {
+          overdue = true;
+        }
+      }
 
       li.innerHTML = `
         <div class="task-header">
@@ -49,7 +63,7 @@ function renderTasks() {
             <strong>${task.name}</strong>
             ${task.time ? `- <small>${task.time}</small>` : ''}
             <span class="priority-tag priority-${task.priority}">${task.priority}</span>
-            ${overdue && !task.completed ? '<span class="overdue">⚠ Overdue</span>' : ''}
+            ${overdue ? '<span class="overdue">⚠ Overdue</span>' : ''}
             <div>Repeat: ${task.repeat}</div>
             <div>Category: ${task.category}</div>
             <select class="edit-select" onchange="editTask(${task.id}, 'priority', this.value)">
@@ -132,5 +146,36 @@ function showPendingTasks() {
   }
 }
 
+function checkOverdueTasks() {
+  const now = new Date();
+  tasks.forEach(task => {
+    if (!task.completed && task.time && !task.notified) {
+      const taskTime = new Date();
+      const [hours, minutes] = task.time.split(':');
+      taskTime.setHours(parseInt(hours));
+      taskTime.setMinutes(parseInt(minutes));
+      taskTime.setSeconds(0);
+
+      if (now > taskTime) {
+        if (Notification.permission === 'granted') {
+          new Notification('⏰ Task Overdue', {
+            body: `"${task.name}" is overdue!`
+          });
+        }
+        task.notified = true;
+        saveTasks();
+      }
+    }
+  });
+}
+
+// Ask notification permission on load
+if (Notification.permission !== 'granted') {
+  Notification.requestPermission();
+}
+
 // Load tasks on page load
-document.addEventListener('DOMContentLoaded', renderTasks);
+document.addEventListener('DOMContentLoaded', () => {
+  renderTasks();
+  setInterval(checkOverdueTasks, 60000); // Check every minute
+});
