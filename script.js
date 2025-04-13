@@ -179,3 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTasks();
   setInterval(checkOverdueTasks, 60000); // Check every minute
 });
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log('✅ Service Worker registered'))
+    .catch(err => console.error('❌ Service Worker registration failed:', err));
+}
