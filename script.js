@@ -185,3 +185,23 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTasks();
   setInterval(checkOverdueTasks, 60000); // Check every minute
 });
+// Load tasks on page load
+document.addEventListener('DOMContentLoaded', () => {
+  renderTasks();
+  setInterval(checkOverdueTasks, 60000); // Check every minute
+});
+function initializeApp() {
+  tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  renderTasks();
+  setInterval(checkOverdueTasks, 60000); // Check every minute
+}
+
+// Handle normal load
+document.addEventListener('DOMContentLoaded', initializeApp);
+
+// Handle iOS Safari page show from bfcache
+window.addEventListener('pageshow', function (event) {
+  if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+    initializeApp();
+  }
+});
