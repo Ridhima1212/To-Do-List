@@ -9,8 +9,34 @@
 <body>
   <div class="container">
     <h2>📋 My To-Do List</h2>
+    
+    <div class="theme-toggle">
+      <button id="themeToggle">Toggle Dark Mode</button>
+    </div>
+    
     <div class="progress-bar">
       <div class="progress" id="progressBar"></div>
+    </div>
+
+    <div class="filter-section">
+      <select id="filterOption">
+        <option value="all">All Tasks</option>
+        <option value="today">Due Today</option>
+        <option value="tomorrow">Due Tomorrow</option>
+        <option value="overdue">Overdue</option>
+        <option value="high-priority">High Priority</option>
+        <option value="incomplete">Incomplete Tasks</option>
+      </select>
+      <button onclick="filterTasks()">Filter</button>
+      <select id="sortOption">
+        <option value="date-asc">Date (Earliest)</option>
+        <option value="date-desc">Date (Latest)</option>
+        <option value="priority-desc">Priority (High to Low)</option>
+        <option value="priority-asc">Priority (Low to High)</option>
+        <option value="name">Name (A-Z)</option>
+      </select>
+      <button onclick="sortTasks()">Sort</button>
+      <button onclick="resetView()">Reset View</button>
     </div>
 
     <div id="taskSections">
@@ -35,6 +61,8 @@
     <div class="task-input">
       <h4>Task:</h4>
       <input type="text" id="taskName" placeholder="Task name" />
+      <h4>Due Date</h4>
+      <input type="date" id="taskDate" />
       <h4>Set Time</h4>
       <input type="time" id="taskTime" />
       <h4>Task Priority</h4>
@@ -50,7 +78,7 @@
         <option value="Personal">Personal</option>
         <option value="Other">Other</option>
       </select>
-      <h4>Repeatition</h4>
+      <h4>Repetition</h4>
       <select id="taskRepeat">
         <option value="None">No Repeat</option>
         <option value="Daily">Daily</option>
@@ -58,6 +86,24 @@
       </select>
       <button onclick="addTask()">Add Task</button>
       <button onclick="showPendingTasks()">Show Pending Tasks</button>
+    </div>
+
+    <div class="stats-container">
+      <h3>Your Productivity Stats</h3>
+      <div class="stats-grid">
+        <div class="stat-box" id="completionRate">
+          <h4>Completion Rate</h4>
+          <div class="stat-value">0%</div>
+        </div>
+        <div class="stat-box" id="tasksByCategory">
+          <h4>Tasks by Category</h4>
+          <div class="category-stats"></div>
+        </div>
+        <div class="stat-box" id="weeklyProgress">
+          <h4>Weekly Progress</h4>
+          <div class="stat-value">0 tasks</div>
+        </div>
+      </div>
     </div>
   </div>
 
